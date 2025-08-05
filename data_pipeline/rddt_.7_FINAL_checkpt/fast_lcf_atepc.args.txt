@@ -1,0 +1,53 @@
+model: <class 'pyabsa.tasks.AspectTermExtraction.models.__lcf__.fast_lcf_atepc.FAST_LCF_ATEPC'>
+optimizer: adamw
+learning_rate: 2e-05
+cache_dataset: True
+warmup_step: -1
+use_bert_spc: True
+max_seq_len: 80
+SRD: 3
+use_syntax_based_SRD: False
+lcf: cdw
+dropout: 0.5
+l2reg: 1e-05
+num_epoch: 10
+batch_size: 16
+seed: 1
+output_dim: 3
+log_step: 209
+patience: 3
+gradient_accumulation_steps: 1
+dynamic_truncate: True
+evaluate_begin: 0
+use_amp: False
+cross_validate_fold: -1
+pretrained_bert: microsoft/deberta-v3-base
+verbose: False
+dataset: ['131.RDDT']
+from_checkpoint: None
+checkpoint_save_mode: 1
+auto_device: True
+path_to_save: None
+load_aug: False
+device: cuda:0
+device_name: NVIDIA GeForce RTX 3070 Ti
+model_name: fast_lcf_atepc
+hidden_dim: 768
+PyABSAVersion: 2.4.1.post1
+TransformersVersion: 4.52.4
+TorchVersion: 2.7.1+cu126+cuda12.6
+dataset_name: Reddit
+save_mode: 1
+logger: <Logger fast_lcf_atepc (INFO)>
+task_code: ATEPC
+task_name: Aspect Term Extraction and Polarity Classification
+dataset_file: {'train': ['integrated_datasets/atepc_datasets/131.RDDT/1.0_rddt.train.dat.atepc', 'integrated_datasets/atepc_datasets/131.RDDT/1.1_rddt.train.dat.atepc', 'integrated_datasets/atepc_datasets/131.RDDT/1.2_rddt.train.dat.atepc'], 'test': ['integrated_datasets/atepc_datasets/131.RDDT/rddt.test.dat.atepc'], 'valid': ['integrated_datasets/atepc_datasets/131.RDDT/rddt.valid.dat.atepc']}
+model_path_to_save: checkpoints
+spacy_model: en_core_web_sm
+IOB_label_to_index: {'B-ASP': 1, 'I-ASP': 2, 'O': 3, '[CLS]': 4, '[SEP]': 5}
+index_to_label: {0: 'Negative', 1: 'Neutral', 2: 'Positive'}
+label_list: ['B-ASP', 'I-ASP', 'O', '[CLS]', '[SEP]']
+num_labels: 6
+sep_indices: 2
+max_test_metrics: {'max_apc_test_acc': 74.7, 'max_apc_test_f1': 69.99, 'max_ate_test_f1': 89.42}
+metrics_of_this_checkpoint: {'apc_acc': 74.7, 'apc_f1': 69.99, 'ate_f1': 89.42}
