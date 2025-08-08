@@ -13,7 +13,7 @@ aspect_extractor = ATEPC.AspectExtractor('data_pipeline/rddt_.7_FINAL_checkpt',
 with open("data_pipeline/validation_dict.json", mode="r", encoding="utf-8") as read_file:
     valid = json.load(read_file)
 
-def predict(submission):
+def predict(submission, iscom):
     prediction = aspect_extractor.predict([submission],
                          save_result=False,
                          print_result=False,  # print the result
@@ -28,6 +28,6 @@ def predict(submission):
         matches = re.findall(r'\$\s*([a-zA-Z_][a-zA-Z0-9_]*)', ticker)
         for match in matches:
             if "$" + match in valid:
-                database.insert("$" + match, sentiment_list[i], str(confidence_list[i]))
+                database.insert("$" + match, sentiment_list[i], str(confidence_list[i]), iscom)
         i+=1
     

@@ -1,5 +1,6 @@
 import praw
 from praw.models import MoreComments
+import prawcore
 from dotenv import load_dotenv
 import os
 import data_preprocessing
@@ -16,8 +17,18 @@ reddit = praw.Reddit(
 
 subreddit = "wallstreetbets"
 
+def submission_stream_init():
+    print("initializing submission stream")
+    while True:
+        try:
+            submission_stream()
+            break
+        except prawcore.exceptions.ServerError:
+            print("Server Error exception occured in submission stream, reattempting initialization")
+            continue
+
 def submission_stream():
-    print("submission stream successful")
+    print("submission stream initialized")
     for submission in reddit.subreddit(subreddit).stream.submissions(skip_existing=True):
 
         # preprocess post title
@@ -30,19 +41,30 @@ def submission_stream():
 
         # predict and append to database
         if sub_title[1]:
-            model_prediction.predict(sub_title[0])
+            model_prediction.predict(sub_title[0], 0)
 
         # predict and append to database
         if sub_titletxt[1]:
-            model_prediction.predict(sub_titletxt[0])
+            model_prediction.predict(sub_titletxt[0], 0)
+
+def comment_stream_init():
+    print("initializing comment stream")
+    while True:
+        try:
+            comment_stream()
+            break
+        except prawcore.exceptions.ServerError:
+            print("Server Error exception occured in comment stream, reattempting initialization")
+            continue
+
 
 def comment_stream():
-    print("comment stream successful")
+    print("comment stream initialized")
     for comment in reddit.subreddit(subreddit).stream.comments(skip_existing=True):
         # more data cleaning
-        com_body = data_preprocessing.clean_data(comment)
+        com_body = data_preprocessing.clean_data(comment.body)
         com_body = data_preprocessing.validate(com_body)
 
         # predict and append to database
         if com_body[1]:
-            model_prediction.predict(com_body[0])
+            model_prediction.predict(com_body[0], 1)
