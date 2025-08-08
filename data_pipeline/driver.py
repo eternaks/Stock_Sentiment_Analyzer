@@ -1,8 +1,8 @@
 import threading
 import data_collection
 
-post_thread = threading.Thread(data_collection.submission_stream, None)
-comment_thread = threading.Thread(data_collection.comment_stream, None)
+post_thread = threading.Thread(target=data_collection.submission_stream_init)
+comment_thread = threading.Thread(target=data_collection.comment_stream_init)
 
 print("starting threads")
 
