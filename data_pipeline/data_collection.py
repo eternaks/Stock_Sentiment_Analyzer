@@ -1,6 +1,6 @@
-import praw
+import asyncpraw
+import asyncio
 from praw.models import MoreComments
-import prawcore
 from dotenv import load_dotenv
 import os
 import data_preprocessing
@@ -8,28 +8,14 @@ import model_prediction
 
 load_dotenv()
 
-reddit = praw.Reddit(
-    client_id = os.getenv('client_id'),
-    client_secret = os.getenv('client_secret'),
-    user_agent = os.getenv('user_agent')
-)
-
-
-subreddit = "wallstreetbets"
-
-def submission_stream_init():
-    print("initializing submission stream")
-    while True:
-        try:
-            submission_stream()
-            break
-        except prawcore.exceptions.ServerError:
-            print("Server Error exception occured in submission stream, reattempting initialization")
-            continue
-
-def submission_stream():
+async def submission_stream(reddit):
     print("submission stream initialized")
-    for submission in reddit.subreddit(subreddit).stream.submissions(skip_existing=True):
+    subreddit = await reddit.subreddit("wallstreetbets")
+    cnt = 1
+
+    async for submission in subreddit.stream.submissions(skip_existing=True):
+        print("Post " + str(cnt) + " processed")
+        cnt+=1
 
         # preprocess post title
         sub_title = data_preprocessing.clean_data(submission.title)
@@ -47,20 +33,20 @@ def submission_stream():
         if sub_titletxt[1]:
             model_prediction.predict(sub_titletxt[0], 0)
 
-def comment_stream_init():
-    print("initializing comment stream")
-    while True:
-        try:
-            comment_stream()
-            break
-        except prawcore.exceptions.ServerError:
-            print("Server Error exception occured in comment stream, reattempting initialization")
+
+async def comment_stream(reddit):
+    print("comment stream initialized")
+    subreddit = await reddit.subreddit("wallstreetbets")
+    cnt = 1
+
+    async for comment in subreddit.stream.comments(skip_existing=True):
+        print("Comment " + str(cnt) + " processed")
+        cnt+=1
+
+        # fix weird bug with comment
+        if isinstance(comment, MoreComments):
             continue
 
-
-def comment_stream():
-    print("comment stream initialized")
-    for comment in reddit.subreddit(subreddit).stream.comments(skip_existing=True):
         # more data cleaning
         com_body = data_preprocessing.clean_data(comment.body)
         com_body = data_preprocessing.validate(com_body)
@@ -68,3 +54,18 @@ def comment_stream():
         # predict and append to database
         if com_body[1]:
             model_prediction.predict(com_body[0], 1)
+
+
+async def main():
+    reddit = asyncpraw.Reddit(
+        client_id = os.getenv('client_id'),
+        client_secret = os.getenv('client_secret'),
+        user_agent = os.getenv('user_agent')
+    )
+    await asyncio.gather(
+        comment_stream(reddit),
+        submission_stream(reddit)
+    )
+
+if __name__ == "__main__":
+    asyncio.run(main())
