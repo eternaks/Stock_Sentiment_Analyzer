@@ -24,9 +24,9 @@ The model was trained on a sample size of about 3600 posts and yieled F1 scores 
 
 ## Installation & Setup
 
-The way the project is set up will require an AWS EC2 and RDS instance
-If you want to run everything locally then you can simply just modify the code in data_pipeline/database.py to accommodate that
-Project was also built in an Ubuntu 22.04 environment
+The way the project is set up will require an AWS EC2 and RDS instance.
+If you want to run everything locally then you can simply just modify the code in data_pipeline/database.py to accommodate that.
+Project was also built in an Ubuntu 22.04 environment.
 
 ### 1. Clone the repository
 ```bash
@@ -53,17 +53,24 @@ pip install -r requirements.text
 ```
 
 ### 4. Create reddit agent and aws ec2 and rds instances
-Here are useful links to create a reddit agent
+Here are useful links to create a reddit agent:
 https://praw.readthedocs.io/en/stable/getting_started/authentication.html
 https://old.reddit.com/prefs/apps/
 
 The ec2 instance I used was a t3 small and I used a mySQL RDS instance.
+
 Note that the t3 small will not have enough memory to run the model, so you should create more virtual memory via swap file.
-Make sure you add the AWS cert to data_pipeline/certs as well
+
+Make sure you add the AWS cert to data_pipeline/certs as well.
+
 The MySQL structure should be as follows
+
 database name = data
+
 table name = predictions
-table columns = int index, int amt, string ticker, float Positive, float Neutral, float Negative, 
+
+table columns = int index, int amt, string ticker, float Positive, float Neutral, float Negative
+
 
 ### 4. Set up environment variables
 Create a .env file in root with the following variables
