@@ -4,12 +4,14 @@ import re
 import json
 import database
 
+# Load pretrained model
 aspect_extractor = ATEPC.AspectExtractor('data_pipeline/rddt_.7_FINAL_checkpt',
                                          auto_device=True,  # False means load model on CPU
                                          cal_perplexity=True,
                                          verbose=True
                                          )
 
+# Open validation dictionary
 with open("data_pipeline/validation_dict.json", mode="r", encoding="utf-8") as read_file:
     valid = json.load(read_file)
 

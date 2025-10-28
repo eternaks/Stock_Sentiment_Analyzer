@@ -4,7 +4,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# submission stream sql connection
 conn_sub = pymysql.connect(auth_plugin_map={'mysql_clear_password':None},host=os.getenv("db_endpoint"), user="admin", password=os.getenv("db_password"), port=3306, database="data", ssl_ca='data_pipeline/certs/global-bundle.pem', ssl_verify_identity=True, ssl_verify_cert=True)
+# comment steam sql connection
 conn_com = pymysql.connect(auth_plugin_map={'mysql_clear_password':None},host=os.getenv("db_endpoint"), user="admin", password=os.getenv("db_password"), port=3306, database="data", ssl_ca='data_pipeline/certs/global-bundle.pem', ssl_verify_identity=True, ssl_verify_cert=True)
 
 
@@ -41,10 +43,10 @@ def insert(ticker, polarity, confidence, iscom):
             conn_com = pymysql.connect(auth_plugin_map={'mysql_clear_password':None},host=os.getenv("db_endpoint"), user="admin", password=os.getenv("db_password"), port=3306, database="data", ssl_ca='data_pipeline/certs/global-bundle.pem', ssl_verify_identity=True, ssl_verify_cert=True)
             comment_cur = conn_com.cursor()
             comment_cur.execute("USE data")
-            print("connection reestablished (hopefully)")
+            print("connection reestablished")
         else:
             print("submission sql connection failed, reattempting connection")
             conn_sub = pymysql.connect(auth_plugin_map={'mysql_clear_password':None},host=os.getenv("db_endpoint"), user="admin", password=os.getenv("db_password"), port=3306, database="data", ssl_ca='data_pipeline/certs/global-bundle.pem', ssl_verify_identity=True, ssl_verify_cert=True)
             submission_cur = conn_sub.cursor()
             submission_cur.execute("USE data")
-            print("connection reestablished (hopefully)")
+            print("connection reestablished")

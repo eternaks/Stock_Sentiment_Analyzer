@@ -21,9 +21,6 @@ config.patience = 2
 config.log_step = -1
 config.seed = [1]
 config.verbose = False  # If verbose == True, PyABSA will output the model strcture and seversal processed data examples
-config.notice = (
-    "This is an training example for aspect term extraction"  # for memos usage
-)
 
 trainer = ATEPC.ATEPCTrainer(
     config=config,
