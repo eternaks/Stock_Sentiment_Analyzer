@@ -88,6 +88,8 @@ You can run the entire pipeline by executing data_pipeline/data_collection.py
 
 You can collect historical posts by executing data_collection/api_call.py
 
+To view the results, execute data_pipeline/showresults.py
+
 
 ## Credit
 
