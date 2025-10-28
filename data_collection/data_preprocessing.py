@@ -1,14 +1,19 @@
 import json
 import re
 
+# dictionary of tickers and common synonyms
 with open("/home/calvin/stock_predictor/data_collection/validation_dict_FINAL.json", mode="r", encoding="utf-8") as read_file:
     valid = json.load(read_file)
+
+regex_pattern = r'https:\S*|!\[img\]\(emote\|\S*'
 
 def validate(post):
     has_ticker = False
     ptr1 = 0
     i = 0
     out = ""
+    # iterate through each word in post and check if it is a ticker
+    # then normalize word to $TICKER
     while i <= len(post):
         word = ""
         if i == len(post) or post[i] == " " or post[i] == "," or post[i] == "." or post[i] == ")" or post[i] == "(":
@@ -25,8 +30,8 @@ def validate(post):
         i+=1
     return (out, has_ticker)
 
-regex_pattern = r'https:\S*|!\[img\]\(emote\|\S*'
-
+# Cleans up common message patterns
+# Some parts might be redundant with the addition of validate but too lazy to remove
 def clean_data(var1):
     if "⣿" in var1:
         return ''

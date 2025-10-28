@@ -2,3 +2,5 @@
 private_vars.py
 ABSADatasets
 .env
+/env
+__pycache__
