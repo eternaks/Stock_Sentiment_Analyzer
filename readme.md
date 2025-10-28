@@ -55,6 +55,7 @@ pip install -r requirements.text
 ### 4. Create reddit agent and aws ec2 and rds instances
 Here are useful links to create a reddit agent:
 https://praw.readthedocs.io/en/stable/getting_started/authentication.html
+
 https://old.reddit.com/prefs/apps/
 
 The ec2 instance I used was a t3 small and I used a mySQL RDS instance.
@@ -84,9 +85,12 @@ db_password=your_db_password
 
 ### 5. Test the installation
 You can run the entire pipeline by executing data_pipeline/data_collection.py
+
 You can collect historical posts by executing data_collection/api_call.py
 
 
-Credit
-This project uses yangheng95's PyABSA framework to perform sentiment analysis
+## Credit
+
+This project uses yangheng95's PyABSA framework to perform sentiment analysis.
+
 His framework can be found here: https://github.com/yangheng95/PyABSA and his paper's doi here: 10.1145/3583780.3614752
