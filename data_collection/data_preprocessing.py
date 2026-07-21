@@ -2,7 +2,7 @@ import json
 import re
 
 # dictionary of tickers and common synonyms
-with open("/home/calvin/stock_predictor/data_collection/validation_dict_FINAL.json", mode="r", encoding="utf-8") as read_file:
+with open("data_collection/validation_dict_FINAL.json", mode="r", encoding="utf-8") as read_file:
     valid = json.load(read_file)
 
 regex_pattern = r'https:\S*|!\[img\]\(emote\|\S*'

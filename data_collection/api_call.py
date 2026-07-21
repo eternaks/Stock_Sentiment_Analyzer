@@ -19,6 +19,7 @@ commentcnt = 0
 data = []
 
 def main():
+    global postcnt, commentcnt
     print("Beginning Scraping")
 
     # loop through most recent submissions in hot category

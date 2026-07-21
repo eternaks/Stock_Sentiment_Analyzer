@@ -1,6 +1,6 @@
 import json
 
-with open("/home/calvin/stock_predictor/data_collection/company_tickers_sec.json", mode="r", encoding="utf-8") as read_file:
+with open("data_collection/company_tickers_sec.json", mode="r", encoding="utf-8") as read_file:
     ticker_list = json.load(read_file)
 
 ticker_map = {}
@@ -25,5 +25,5 @@ for i in range(len(ticker_list)):
 # Ticker, Company Name short (e.g. Alphabet), Company Name Full (e.g. Alphabet Inc.), 
 
 # dump into json
-with open("/home/calvin/stock_predictor/data_collection/validation_dict_new.json", "w") as fp:
+with open("data_collection/validation_dict_new.json", "w") as fp:
     json.dump(ticker_map, fp)
