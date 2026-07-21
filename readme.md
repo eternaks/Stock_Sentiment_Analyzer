@@ -74,13 +74,9 @@ table columns = int index, int amt, string ticker, float Positive, float Neutral
 
 
 ### 4. Set up environment variables
-Create a .env file in root with the following variables
+Copy `.env.example` to `.env` in the project root and fill in your own values:
 ```bash
-client_id=your_client_id
-client_secret=your_client_secret
-user_agent=your_user_agent
-db_endpoint=your_db_endpoint
-db_password=your_db_password
+cp .env.example .env
 ```
 
 ### 5. Test the installation
